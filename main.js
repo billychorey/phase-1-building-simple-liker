@@ -7,8 +7,7 @@ const FULL_HEART = '♥'
 // .then(res => res.json())
 // .then(data => console.log(data));
 //first get the buttons
-let buttons = document.querySelectorAll('li span');
-
+let buttons = document.querySelectorAll('.like-glyph');
 buttons.forEach(button => {
   button.addEventListener('click', addRemoveLike)
 })
@@ -20,23 +19,20 @@ buttons.forEach(button => {
 function addRemoveLike(e) {
   target = e.target;
   mimicServerCall()
-  .then(function (response) {
-    if (target.classList.contains('like-glyph')) {
-      target.classList.remove('like-glyph');
-      target.classList.add('activated-heart');
-    } else {
-      target.classList.remove('activated-heart');
-      target.classList.add('like-glyph');
-    }
-    
-  })
-  .catch(function (error) {
-    document.querySelector('#modal').classList.remove('hidden')
-    setTimeout(function () {
-      document.querySelector('#modal').classList.add('hidden')
-    }, 3000)
-  });
-
+    .then(function (response) {
+      if (target.innerText === EMPTY_HEART) {
+        console.log('empty');
+        target.innerText = FULL_HEART;
+      } else {
+        target.innerText = EMPTY_HEART;
+      }
+    })
+    .catch(function (error) {
+      document.querySelector('#modal').classList.remove('hidden');
+      setTimeout(function () {
+        document.querySelector('#modal').classList.add('hidden');
+      }, 3000);
+    });
 }
 
 
